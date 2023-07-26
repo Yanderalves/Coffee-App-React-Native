@@ -61,6 +61,9 @@ export default function HomeScreen() {
         data={coffees}
         renderItem={({ item }) => <CoffeeCard data={item} />}
         numColumns={"2"}
+        contentContainerStyle={{
+          justifyContent: "center",
+        }}
       />
     </View>
   );
