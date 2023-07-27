@@ -1,10 +1,4 @@
-import {
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import React from "react";
 import { BlurView } from "expo-blur";
 import { Entypo } from "@expo/vector-icons";
@@ -25,7 +19,7 @@ export default function coffeeCard({ data, onPress }) {
         <BlurView
           intensity={90}
           tint="dark"
-          className="flex-row absolute p-2 gap-x-1 rounded-tr-x rounded-bl-3xl right-0"
+          className="flex-row absolute pr-5 pl-2 py-1 gap-x-1 rounded-tr-x rounded-bl-3xl right-0"
         >
           <Entypo name="star" color="#D98046" size={20} />
           <Text className="text-white font-bold">{data.rating}</Text>

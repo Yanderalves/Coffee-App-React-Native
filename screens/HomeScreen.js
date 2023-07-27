@@ -16,10 +16,10 @@ import CoffeeCard from "../components/CoffeeCard";
 
 export default function HomeScreen({ navigation }) {
   const [categorySelectedId, setCategorySelectedId] = useState(null);
-  const [itemSelected, setItemSelected] = useState(null);
+  const [textInput, setTextInput] = useState(null);
+  const [cardsFiltereds, setcardsFiltereds] = useState();
 
   const gotToDetails = (item) => {
-    setItemSelected(item);
     navigation.navigate("details", { item });
   };
 
@@ -39,6 +39,8 @@ export default function HomeScreen({ navigation }) {
       </Text>
       <View className="relative">
         <TextInput
+          value={textInput}
+          onChangeText={setTextInput}
           placeholder="Find your coffee.."
           className="bg-[#141821] rounded-3xl py-4 px-14 mt-5 text-base"
           placeholderTextColor="#4D515A"
