@@ -4,20 +4,18 @@ import {
   StatusBar,
   ImageBackground,
   TouchableOpacity,
-  FlatList,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Fontisto, AntDesign, Ionicons } from "@expo/vector-icons";
-import { useRoute } from "@react-navigation/native";
 
 import { BlurView } from "expo-blur";
 
-export default function ProductScreen({ navigation }) {
+export default function ProductScreen({ navigation, route }) {
+  const [sizeSelected, setSizeSelected] = useState(null);
+
   const sizes = ["S", "M", "L"];
 
-  const routes = useRoute();
-
-  const data = routes.params.item;
+  const data = route.params.item;
 
   const goBack = () => {
     navigation.goBack();
@@ -78,6 +76,7 @@ export default function ProductScreen({ navigation }) {
           </View>
         </BlurView>
       </ImageBackground>
+
       <View className="mt-3">
         <View className="gap-y-4 px-5">
           <Text className="text-white font-bold text-xl">Description</Text>
@@ -85,17 +84,23 @@ export default function ProductScreen({ navigation }) {
             {data.description}
           </Text>
         </View>
+
         <View className="flex-row mt-3 gap-x-2 justify-center items-center">
           {sizes.map((item, index) => (
             <TouchableOpacity
               key={index}
-              className="bg-[#141821] rounded-lg w-28 h-10 justify-between items-center"
+              onPress={() => setSizeSelected(item)}
+              className="bg-[#141821] border-2 border-w rounded-lg w-28 h-10 justify-center items-center"
+              style={{
+                borderColor: sizeSelected === item ? "#D98046" : "white",
+              }}
             >
               <Text className="text-white font-bold text-xl">{item}</Text>
             </TouchableOpacity>
           ))}
         </View>
-        <View className="justify-between flex-row mt-3 px-5">
+
+        <View className="justify-between flex-row mt-3">
           <View className="items-center">
             <Text className="text-[#4D515A] text-xl">Price</Text>
             <View className="flex-row gap-x-1">
