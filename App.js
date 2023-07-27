@@ -1,5 +1,5 @@
-import ProductScreen from "./screens/ProductScreen";
+import Routes from "./routes";
 
 export default function App() {
-  return <ProductScreen />;
+  return <Routes />;
 }

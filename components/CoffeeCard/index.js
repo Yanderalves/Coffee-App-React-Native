@@ -9,7 +9,7 @@ import React from "react";
 import { BlurView } from "expo-blur";
 import { Entypo } from "@expo/vector-icons";
 
-export default function coffeeCard({ data }) {
+export default function coffeeCard({ data, onPress }) {
   return (
     <BlurView
       intensity="35"
@@ -44,7 +44,10 @@ export default function coffeeCard({ data }) {
             <Text className="text-[#D17742] mr-2 text-xl">$</Text>
             <Text className="text-white text-xl">{data.price}</Text>
           </View>
-          <TouchableOpacity className="rounded-3xl bg-[#D17742] p-1">
+          <TouchableOpacity
+            onPress={onPress}
+            className="rounded-3xl bg-[#D17742] p-1"
+          >
             <Entypo name="plus" size={35} color="#FFF" />
           </TouchableOpacity>
         </View>

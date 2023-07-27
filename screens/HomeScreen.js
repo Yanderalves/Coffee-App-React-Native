@@ -7,15 +7,21 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { themeColors } from "../theme";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import coffees from "../constants/";
 import LabelCoffeeCard from "../components/LabelCoffeCard";
 import CoffeeCard from "../components/CoffeeCard";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [categorySelectedId, setCategorySelectedId] = useState(null);
+  const [itemSelected, setItemSelected] = useState(null);
+
+  const gotToDetails = (item) => {
+    setItemSelected(item);
+    navigation.navigate("details", { item });
+  };
 
   return (
     <View className={`bg-[#0C0F14] flex-1 p-5`}>
@@ -59,7 +65,9 @@ export default function HomeScreen() {
       </View>
       <FlatList
         data={coffees}
-        renderItem={({ item }) => <CoffeeCard data={item} />}
+        renderItem={({ item }) => (
+          <CoffeeCard onPress={() => gotToDetails(item)} data={item} />
+        )}
         numColumns={"2"}
         contentContainerStyle={{}}
       />
