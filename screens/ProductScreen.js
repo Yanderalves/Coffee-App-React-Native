@@ -6,7 +6,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { Fontisto, AntDesign, Ionicons } from "@expo/vector-icons";
+import {
+  Fontisto,
+  AntDesign,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 import { BlurView } from "expo-blur";
 
@@ -26,7 +31,7 @@ export default function ProductScreen({ navigation, route }) {
       <ImageBackground
         source={data.image}
         resizeMode="cover"
-        className="w-full h-[65%] rounded-3xl overflow-hidden justify-between"
+        className="w-full h-[60%] rounded-3xl overflow-hidden justify-between"
         imageStyle={{ height: "100%" }}
       >
         <View className="flex-row p-5 justify-between">
@@ -92,7 +97,7 @@ export default function ProductScreen({ navigation, route }) {
               onPress={() => setSizeSelected(item)}
               className="bg-[#141821] border-2 border-w rounded-lg w-28 h-10 justify-center items-center"
               style={{
-                borderColor: sizeSelected === item ? "#D98046" : "white",
+                borderColor: sizeSelected === item ? "#D98046" : "#141821",
               }}
             >
               <Text className="text-white font-bold text-xl">{item}</Text>
@@ -100,16 +105,16 @@ export default function ProductScreen({ navigation, route }) {
           ))}
         </View>
 
-        <View className="justify-between flex-row mt-3">
+        <View className="justify-between items-center flex-row mt-3">
           <View className="items-center">
             <Text className="text-[#4D515A] text-xl">Price</Text>
-            <View className="flex-row gap-x-1">
+            <View className="flex-row gap-x-2 items-center justify-center">
               <Text className="text-[#D98046] text-2xl">$</Text>
               <Text className="text-white text-2xl">{data.price}</Text>
             </View>
           </View>
-          <TouchableOpacity className="bg-[#D98046] rounded-xl justify-center items-center p-3 w-36 h-14">
-            <Text className="text-white font-bold text-xl">Buy now</Text>
+          <TouchableOpacity className="bg-[#D98046] rounded-xl justify-center items-center w-36 h-12">
+            <MaterialIcons name="shopping-cart" size={25} color="white" />
           </TouchableOpacity>
         </View>
       </View>

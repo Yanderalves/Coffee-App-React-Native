@@ -19,7 +19,7 @@ export default function coffeeCard({ data, onPress }) {
       <ImageBackground
         resizeMode="cover"
         source={data.image}
-        className="bg-white h-2/4 rounded-3xl overflow-hidden relative"
+        className="bg-white border-[1px] border-[#D17742] h-2/4 rounded-3xl overflow-hidden relative"
         imageStyle={{ height: "100%" }}
       >
         <BlurView
