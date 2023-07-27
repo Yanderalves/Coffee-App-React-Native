@@ -17,6 +17,7 @@ import { BlurView } from "expo-blur";
 
 export default function ProductScreen({ navigation, route }) {
   const [sizeSelected, setSizeSelected] = useState(null);
+  const [favorite, setFavorite] = useState(false);
 
   const sizes = ["S", "M", "L"];
 
@@ -24,6 +25,10 @@ export default function ProductScreen({ navigation, route }) {
 
   const goBack = () => {
     navigation.goBack();
+  };
+
+  const handleFavorite = () => {
+    setFavorite(!favorite);
   };
 
   return (
@@ -41,8 +46,15 @@ export default function ProductScreen({ navigation, route }) {
           >
             <AntDesign name="arrowleft" color="#4D515A" size={25} />
           </TouchableOpacity>
-          <TouchableOpacity className=" w-12 h-12 bg-[#141821] rounded-2xl justify-center items-center">
-            <AntDesign name="heart" color="#4D515A" size={25} />
+          <TouchableOpacity
+            onPress={handleFavorite}
+            className=" w-12 h-12 bg-[#141821] rounded-2xl justify-center items-center"
+          >
+            <AntDesign
+              name="heart"
+              color={favorite ? "red" : "#4D515A"}
+              size={25}
+            />
           </TouchableOpacity>
         </View>
         <BlurView
@@ -62,7 +74,7 @@ export default function ProductScreen({ navigation, route }) {
               </Text>
             </View>
           </View>
-          <View className="justify-center items-center">
+          <View className="justify-center">
             <View className="flex-row gap-x-3">
               <View className="bg-[#141821] w-16 h-16 gap-y-1 p-2 rounded-2xl justify-center items-center">
                 <Fontisto name="coffeescript" color="white" size={20} />
@@ -73,8 +85,8 @@ export default function ProductScreen({ navigation, route }) {
                 <Text className="text-white">Milk</Text>
               </View>
             </View>
-            <View className=" mt-3">
-              <Text className="text-white bg-[#141821] gap-y-1 p-3 rounded-2xl">
+            <View className=" mt-3 justify-center items-center">
+              <Text className="text-white text-center p-2  w-full bg-[#141821] rounded-2xl">
                 Medium rosted
               </Text>
             </View>
@@ -109,7 +121,7 @@ export default function ProductScreen({ navigation, route }) {
           <View className="items-center">
             <Text className="text-[#4D515A] text-xl">Price</Text>
             <View className="flex-row gap-x-2 items-center justify-center">
-              <Text className="text-[#D98046] text-2xl">$</Text>
+              <Text className="text-[#D98046] font-bold text-2xl">$</Text>
               <Text className="text-white text-2xl">{data.price}</Text>
             </View>
           </View>

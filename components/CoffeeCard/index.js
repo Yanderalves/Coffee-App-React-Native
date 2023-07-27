@@ -6,8 +6,8 @@ import { Entypo } from "@expo/vector-icons";
 export default function coffeeCard({ data, onPress }) {
   return (
     <BlurView
-      intensity="35"
-      tint="dark"
+      intensity="10"
+      tint="light"
       className="bg-[#4D515A] flex-grow mt-5 mx-1 overflow-visible rounded-3xl  max-h-72 p-3"
     >
       <ImageBackground
