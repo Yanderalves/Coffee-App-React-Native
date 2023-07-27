@@ -4,6 +4,7 @@ import {
   StatusBar,
   ImageBackground,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import React from "react";
 import { Fontisto, AntDesign, Ionicons } from "@expo/vector-icons";
@@ -23,8 +24,10 @@ const data = {
 };
 
 export default function ProductScreen() {
+  const sizes = ["S", "M", "L"];
+
   return (
-    <View className="bg-[#0C0F14] flex-1 p-5">
+    <View className="bg-[#0C0F14] flex-1 px-5 py-1 items-center">
       <ImageBackground
         source={data.image}
         resizeMode="cover"
@@ -75,7 +78,36 @@ export default function ProductScreen() {
           </View>
         </BlurView>
       </ImageBackground>
-      <View></View>
+      <View className="mt-3">
+        <View className="gap-y-4 px-5">
+          <Text className="text-white font-bold text-xl">Description</Text>
+          <Text numberOfLines={2} className="text-white text-base leading-7">
+            {data.description}
+          </Text>
+        </View>
+        <View className="flex-row mt-3 gap-x-2 justify-center items-center">
+          {sizes.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              className="bg-[#141821] rounded-lg w-28 h-10 justify-between items-center"
+            >
+              <Text className="text-white font-bold text-xl">{item}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View className="justify-between flex-row mt-3 px-5">
+          <View className="items-center">
+            <Text className="text-[#4D515A] text-xl">Price</Text>
+            <View className="flex-row gap-x-1">
+              <Text className="text-[#D98046] text-2xl">$</Text>
+              <Text className="text-white text-2xl">{data.price}</Text>
+            </View>
+          </View>
+          <TouchableOpacity className="bg-[#D98046] rounded-xl justify-center items-center p-3 w-36 h-14">
+            <Text className="text-white font-bold text-xl">Buy now</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }
