@@ -26,7 +26,14 @@ export default function HomeScreen({ navigation }) {
 
   const filterCards = () => {
     let newArray;
-    if (categorySelectedId !== null) {
+    if ((categorySelectedId !== null) & (textInput !== null)) {
+      newArray = coffees.filter((item) => {
+        return (
+          item.name.toLowerCase().includes(textInput.toLowerCase()) &
+          (item.categoryId === categorySelectedId)
+        );
+      });
+    } else if (categorySelectedId !== null) {
       newArray = coffees.filter((item) => {
         return item.categoryId === categorySelectedId;
       });
