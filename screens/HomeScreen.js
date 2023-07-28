@@ -6,6 +6,7 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { themeColors } from "../theme";
@@ -16,12 +17,43 @@ import CoffeeCard from "../components/CoffeeCard";
 
 export default function HomeScreen({ navigation }) {
   const [categorySelectedId, setCategorySelectedId] = useState(null);
-  const [textInput, setTextInput] = useState(null);
-  const [cardsFiltereds, setcardsFiltereds] = useState();
+  const [textInput, setTextInput] = useState("");
+  const [cardsFiltered, setCardsFiltered] = useState(coffees);
 
   const gotToDetails = (item) => {
     navigation.navigate("details", { item });
   };
+
+  const filterCards = () => {
+    let newArray;
+    if (categorySelectedId !== null) {
+      newArray = coffees.filter((item) => {
+        return item.categoryId === categorySelectedId;
+      });
+    } else if ((categorySelectedId === null) & (textInput !== "")) {
+      newArray = coffees.filter((item) => {
+        return item.name.toLowerCase().includes(textInput.toLowerCase());
+      });
+    }
+
+    setCardsFiltered(newArray);
+  };
+
+  const handleCategory = (item) => {
+    if (item.id === categorySelectedId) {
+      setCategorySelectedId(null);
+    } else {
+      setCategorySelectedId(item.id);
+    }
+  };
+
+  useEffect(() => {
+    if (textInput !== "" || categorySelectedId !== null) {
+      filterCards();
+    } else {
+      setCardsFiltered(coffees);
+    }
+  }, [textInput, categorySelectedId]);
 
   return (
     <View className={`bg-[#0C0F14] flex-1 p-5`}>
@@ -42,7 +74,7 @@ export default function HomeScreen({ navigation }) {
           value={textInput}
           onChangeText={setTextInput}
           placeholder="Find your coffee.."
-          className="bg-[#141821] rounded-3xl py-4 px-14 mt-5 text-base"
+          className="bg-[#141821] text-white rounded-3xl py-4 px-14 mt-5 text-base"
           placeholderTextColor="#4D515A"
         ></TextInput>
         <TouchableOpacity className="absolute top-[37] left-4">
@@ -54,7 +86,7 @@ export default function HomeScreen({ navigation }) {
           data={coffees}
           renderItem={({ item }) => (
             <LabelCoffeeCard
-              onPress={() => setCategorySelectedId(item.id)}
+              onPress={() => handleCategory(item)}
               categorySelected={categorySelectedId}
               data={item}
             />
@@ -66,12 +98,11 @@ export default function HomeScreen({ navigation }) {
         />
       </View>
       <FlatList
-        data={coffees}
+        data={cardsFiltered}
         renderItem={({ item }) => (
           <CoffeeCard onPress={() => gotToDetails(item)} data={item} />
         )}
         numColumns={"2"}
-        contentContainerStyle={{}}
       />
     </View>
   );

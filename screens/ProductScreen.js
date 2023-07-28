@@ -125,7 +125,12 @@ export default function ProductScreen({ navigation, route }) {
               <Text className="text-white text-2xl">{data.price}</Text>
             </View>
           </View>
-          <TouchableOpacity className="bg-[#D98046] rounded-xl justify-center items-center w-36 h-12">
+
+          <TouchableOpacity
+            disabled={!(sizeSelected !== null)}
+            className="bg-[#D98046] rounded-xl justify-center items-center w-36 h-12"
+            style={{ opacity: !(sizeSelected !== null) ? 0.2 : 1 }}
+          >
             <MaterialIcons name="shopping-cart" size={25} color="white" />
           </TouchableOpacity>
         </View>
