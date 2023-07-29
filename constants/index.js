@@ -1,5 +1,5 @@
 // list of coffes
-export default [
+const coffees = [
   {
     id: 1,
     name: "Cappuccino",
@@ -18,7 +18,7 @@ export default [
     price: "4.01",
     description:
       "Espresso is a coffee drink made with hot coffee beans that are roasted and then brewed with hot water, resulting in a strong, full-bodied, and concentrated typical of a cappuccino. It is traditionally prepared with steamed milk, and is traditionally topped with a small amount of foam.",
-    categoryId: 1,
+    categoryId: 3,
     rating: 4.5,
     included: "With Oat milk",
   },
@@ -29,7 +29,7 @@ export default [
     price: "3.05",
     description:
       "Latte is a coffee drink made with espresso and steamed milk. It is traditionally prepared with steamed milk, and is traditionally topped with a small amount of foam.",
-    categoryId: 4,
+    categoryId: 2,
     rating: 4.5,
     included: "With Oat milk",
   },
@@ -51,7 +51,7 @@ export default [
     price: "4.00",
     description:
       "Cappuccino is a coffee drink made with espresso and hot milk. It is traditionally prepared with steamed milk, and is traditionally topped with a small amount of foam.",
-    categoryId: 2,
+    categoryId: 1,
     rating: 4.5,
     included: "With Oat milk",
   },
@@ -62,7 +62,7 @@ export default [
     price: "5.00",
     description:
       "Espresso is a coffee drink made with hot coffee beans that are roasted and then brewed with hot water, resulting in a strong, full-bodied, and concentrated typical of a cappuccino. It is traditionally prepared with steamed milk, and is traditionally topped with a small amount of foam.",
-    categoryId: 2,
+    categoryId: 3,
     rating: 4.5,
     included: "With Oat milk",
   },
@@ -73,7 +73,7 @@ export default [
     price: "2.07",
     description:
       "Cappuccino is a coffee drink made with espresso and hot milk. It is traditionally prepared with steamed milk, and is traditionally topped with a small amount of foam.",
-    categoryId: 3,
+    categoryId: 1,
     rating: 4.5,
     included: "With Oat milk",
   },
@@ -89,3 +89,12 @@ export default [
     included: "With Oat milk",
   },
 ];
+
+const categories = [
+  { name: "Capuccino", id: 1 },
+  { name: "Latte", id: 2 },
+  { name: "Espresso", id: 3 },
+  { name: "Flat white", id: 4 },
+];
+
+export { coffees, categories };

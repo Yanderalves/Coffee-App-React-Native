@@ -5,13 +5,13 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
-  ScrollView,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { themeColors } from "../theme";
-import { Entypo, FontAwesome } from "@expo/vector-icons";
-import coffees from "../constants/";
+import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { coffees, categories as categoriesList } from "../constants/";
 import LabelCoffeeCard from "../components/LabelCoffeCard";
 import CoffeeCard from "../components/CoffeeCard";
 
@@ -90,7 +90,7 @@ export default function HomeScreen({ navigation }) {
       </View>
       <View>
         <FlatList
-          data={coffees}
+          data={categoriesList}
           renderItem={({ item }) => (
             <LabelCoffeeCard
               onPress={() => handleCategory(item)}
@@ -105,6 +105,14 @@ export default function HomeScreen({ navigation }) {
         />
       </View>
       <FlatList
+        ListEmptyComponent={
+          <View className=" justify-center items-center flex-row gap-x-5 mt-6">
+            <Text className="text-white font-bold text-3xl text-center">
+              List empty..
+            </Text>
+            <MaterialIcons name="search-off" size={30} color="white" />
+          </View>
+        }
         data={cardsFiltered}
         renderItem={({ item }) => (
           <CoffeeCard onPress={() => gotToDetails(item)} data={item} />
