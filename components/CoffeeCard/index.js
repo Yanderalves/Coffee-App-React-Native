@@ -3,7 +3,12 @@ import React from "react";
 import { BlurView } from "expo-blur";
 import { Entypo } from "@expo/vector-icons";
 
-export default function coffeeCard({ data, onPress }) {
+export default function CoffeeCard({
+  data,
+  onPress,
+  page = "details",
+  sizeIcon = 35,
+}) {
   return (
     <BlurView
       intensity="10"
@@ -42,7 +47,11 @@ export default function coffeeCard({ data, onPress }) {
             onPress={onPress}
             className="rounded-3xl bg-[#D17742] p-1"
           >
-            <Entypo name="plus" size={35} color="#FFF" />
+            <Entypo
+              name={page === "details" ? "plus" : "trash"}
+              size={sizeIcon}
+              color="#FFF"
+            />
           </TouchableOpacity>
         </View>
       </View>

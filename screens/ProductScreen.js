@@ -15,6 +15,8 @@ import {
 
 import { BlurView } from "expo-blur";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function ProductScreen({ navigation, route }) {
   const [sizeSelected, setSizeSelected] = useState(null);
   const [favorite, setFavorite] = useState(false);
@@ -27,8 +29,23 @@ export default function ProductScreen({ navigation, route }) {
     navigation.goBack();
   };
 
-  const handleFavorite = () => {
-    setFavorite(!favorite);
+  const AddFavorite = async () => {
+    const localStorageFavorites =
+      (await AsyncStorage.getItem("@favorites")) || "[]";
+
+    const favorites = JSON.parse(localStorageFavorites);
+
+    const isExists = favorites.some((item) => item.id === data.id);
+
+    if (!isExists) {
+      favorites.push(data);
+
+      await AsyncStorage.setItem("@favorites", JSON.stringify(favorites));
+
+      setFavorite(!favorite);
+    }
+
+    navigation.navigate("favorites");
   };
 
   return (
@@ -47,7 +64,7 @@ export default function ProductScreen({ navigation, route }) {
             <AntDesign name="arrowleft" color="#4D515A" size={25} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={handleFavorite}
+            onPress={AddFavorite}
             className=" w-12 h-12 bg-[#141821] rounded-2xl justify-center items-center"
           >
             <AntDesign
@@ -64,13 +81,15 @@ export default function ProductScreen({ navigation, route }) {
         >
           <View className="justify-between h-[80%]">
             <View className="gap-y-1">
-              <Text className="text-white font-bold text-2xl">{data.name}</Text>
-              <Text className="text-[#4D515A]">{data.included}</Text>
+              <Text className="text-white font-bold text-2xl">
+                {data?.name}
+              </Text>
+              <Text className="text-[#4D515A]">{data?.included}</Text>
             </View>
             <View className="flex-row gap-x-2 items-center">
               <AntDesign name="star" size={20} color="#D98046" />
               <Text className="text-white text-lg font-semibold">
-                {data.rating}
+                {data?.rating}
               </Text>
             </View>
           </View>
@@ -98,7 +117,7 @@ export default function ProductScreen({ navigation, route }) {
         <View className="gap-y-4 px-5">
           <Text className="text-white font-bold text-xl">Description</Text>
           <Text numberOfLines={2} className="text-white text-base leading-7">
-            {data.description}
+            {data?.description}
           </Text>
         </View>
 
@@ -122,7 +141,7 @@ export default function ProductScreen({ navigation, route }) {
             <Text className="text-[#4D515A] text-xl">Price</Text>
             <View className="flex-row gap-x-2 items-center justify-center">
               <Text className="text-[#D98046] font-bold text-2xl">$</Text>
-              <Text className="text-white text-2xl">{data.price}</Text>
+              <Text className="text-white text-2xl">{data?.price}</Text>
             </View>
           </View>
 

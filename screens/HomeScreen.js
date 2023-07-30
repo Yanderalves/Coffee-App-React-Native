@@ -5,8 +5,6 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { themeColors } from "../theme";
@@ -14,6 +12,7 @@ import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { coffees, categories as categoriesList } from "../constants/";
 import LabelCoffeeCard from "../components/LabelCoffeCard";
 import CoffeeCard from "../components/CoffeeCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen({ navigation }) {
   const [categorySelectedId, setCategorySelectedId] = useState(null);
