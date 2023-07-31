@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import StackRoutes from "./stack.routes";
 import FavoritesScreen from "../screens/FavoritesScreen";
+import CarScreen from "../screens/CarScreen";
 import { FontAwesome } from "@expo/vector-icons";
 import { useContext } from "react";
 import { context } from "../context/context";
@@ -8,7 +9,7 @@ import { context } from "../context/context";
 const Tab = createBottomTabNavigator();
 
 export default function TabRoutes() {
-  const { countItems } = useContext(context);
+  const { countFavoriteItems, countShoppingItems } = useContext(context);
   return (
     <Tab.Navigator
       detachInactiveScreens={false}
@@ -42,8 +43,17 @@ export default function TabRoutes() {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="heart" size={size} color={color} />
           ),
-          tabBarBadge: countItems || null,
-          tabBarActiveTintColor: "red",
+          tabBarBadge: countFavoriteItems || null,
+        }}
+      />
+      <Tab.Screen
+        name="Shopping"
+        component={CarScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="shopping-bag" size={size} color={color} />
+          ),
+          tabBarBadge: countShoppingItems || null,
         }}
       />
     </Tab.Navigator>

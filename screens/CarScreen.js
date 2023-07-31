@@ -7,9 +7,9 @@ import CoffeeCard from "../components/CoffeeCard";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { context } from "../context/context";
 
-export default function FavoritesScreen({ navigation }) {
+export default function CarScreen({ navigation }) {
   const [data, setData] = useState([]);
-  const { updateCountFavoriteItemsFromLocalStorage } = useContext(context);
+  const { updateCountShoppingItemsFromLocalStorage } = useContext(context);
 
   useEffect(() => {
     fillData();
@@ -20,18 +20,18 @@ export default function FavoritesScreen({ navigation }) {
   };
 
   const fillData = async () => {
-    const localStorageData = (await AsyncStorage.getItem("@favorites")) || "[]";
+    const localStorageData = (await AsyncStorage.getItem("@shopping")) || "[]";
 
     setData(JSON.parse(localStorageData));
   };
 
-  const removeFavorite = async (id) => {
+  const removeItemShopping = async (id) => {
     const newArray = data.filter((item) => item.id !== id);
 
-    await AsyncStorage.setItem("@favorites", JSON.stringify(newArray));
+    await AsyncStorage.setItem("@shopping", JSON.stringify(newArray));
 
     fillData();
-    updateCountFavoriteItemsFromLocalStorage();
+    updateCountShoppingItemsFromLocalStorage();
   };
 
   return (
@@ -57,8 +57,8 @@ export default function FavoritesScreen({ navigation }) {
         renderItem={({ item }) => (
           <CoffeeCard
             sizeIcon={25}
-            onPress={() => removeFavorite(item.id)}
-            page="favorites"
+            onPress={() => removeItemShopping(item.id)}
+            page="car"
             data={item}
           />
         )}

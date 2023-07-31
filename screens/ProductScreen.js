@@ -19,10 +19,16 @@ import { BlurView } from "expo-blur";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { context } from "../context/context";
 
+const LOCAL_STORAGE_FAVORITES_KEY = "@favorites";
+const LOCAL_STORAGE_SHOPPING_KEY = "@shopping";
+
 export default function ProductScreen({ navigation, route }) {
   const [sizeSelected, setSizeSelected] = useState(null);
   const [favorite, setFavorite] = useState(false);
-  const { updateCountItemsFromLocalStorage } = useContext(context);
+  const {
+    updateCountFavoriteItemsFromLocalStorage,
+    updateCountShoppingItemsFromLocalStorage,
+  } = useContext(context);
 
   const sizes = ["S", "M", "L"];
 
@@ -32,39 +38,59 @@ export default function ProductScreen({ navigation, route }) {
     navigation.goBack();
   };
 
-  const getItemsFromLocalStorage = async () => {
-    const localStorageFavorites =
-      (await AsyncStorage.getItem("@favorites")) || "[]";
-
-    return JSON.parse(localStorageFavorites);
+  const getItemsFromLocalStorage = async (key) => {
+    const localStorageData = (await AsyncStorage.getItem(key)) || "[]";
+    return JSON.parse(localStorageData);
   };
 
-  const AddFavorite = async () => {
-    const favorites = await getItemsFromLocalStorage();
+  const AddFavorite = async (data) => {
+    const favorites = await getItemsFromLocalStorage(
+      LOCAL_STORAGE_FAVORITES_KEY,
+    );
 
     const isExists = favorites.some((item) => item.id === data.id);
 
     if (!isExists) {
       favorites.push(data);
 
-      await AsyncStorage.setItem("@favorites", JSON.stringify(favorites));
+      await AsyncStorage.setItem(
+        LOCAL_STORAGE_FAVORITES_KEY,
+        JSON.stringify(favorites),
+      );
 
-      updateCountItemsFromLocalStorage();
+      updateCountFavoriteItemsFromLocalStorage();
+    }
+  };
+
+  const AddShoppingItem = async (data) => {
+    const shoppingItems = await getItemsFromLocalStorage(
+      LOCAL_STORAGE_SHOPPING_KEY,
+    );
+
+    const isExists = shoppingItems.some((item) => item.id === data.id);
+
+    if (!isExists) {
+      shoppingItems.push(data);
+
+      await AsyncStorage.setItem(
+        LOCAL_STORAGE_SHOPPING_KEY,
+        JSON.stringify(shoppingItems),
+      );
+
+      updateCountShoppingItemsFromLocalStorage();
     }
   };
 
   useEffect(() => {
     const initialize = async () => {
-      const favorites = await getItemsFromLocalStorage();
+      const favorites = await getItemsFromLocalStorage(
+        LOCAL_STORAGE_FAVORITES_KEY,
+      );
       const isExists = favorites.some((item) => item.id === data.id);
-      if (isExists) {
-        setFavorite(true);
-      } else {
-        setFavorite(false);
-      }
+      setFavorite(isExists);
     };
     initialize();
-  });
+  }, []);
 
   return (
     <View className="bg-[#0C0F14] flex-1 px-5 py-1 items-center">
@@ -164,6 +190,7 @@ export default function ProductScreen({ navigation, route }) {
           </View>
 
           <TouchableOpacity
+            onPress={AddShoppingItem}
             disabled={!(sizeSelected !== null)}
             className="bg-[#D98046] rounded-xl justify-center items-center w-36 h-12"
             style={{ opacity: !(sizeSelected !== null) ? 0.2 : 1 }}
