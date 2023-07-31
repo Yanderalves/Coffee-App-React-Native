@@ -11,7 +11,7 @@ const LOCAL_STORAGE_FAVORITES_KEY = "@favorites";
 
 export default function FavoritesScreen({ navigation }) {
   const [data, setData] = useState([]);
-  const { updateCountFavoriteItemsFromLocalStorage } = useContext(context);
+  const { handleValue } = useContext(context);
 
   useEffect(() => {
     fillData();
@@ -37,7 +37,7 @@ export default function FavoritesScreen({ navigation }) {
     );
 
     fillData();
-    updateCountFavoriteItemsFromLocalStorage();
+    handleValue(LOCAL_STORAGE_FAVORITES_KEY);
   };
 
   return (

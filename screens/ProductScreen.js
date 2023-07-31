@@ -25,10 +25,7 @@ const LOCAL_STORAGE_SHOPPING_KEY = "@shopping";
 export default function ProductScreen({ navigation, route }) {
   const [sizeSelected, setSizeSelected] = useState(null);
   const [favorite, setFavorite] = useState(false);
-  const {
-    updateCountFavoriteItemsFromLocalStorage,
-    updateCountShoppingItemsFromLocalStorage,
-  } = useContext(context);
+  const { handleValue } = useContext(context);
 
   const sizes = ["S", "M", "L"];
 
@@ -60,7 +57,7 @@ export default function ProductScreen({ navigation, route }) {
         JSON.stringify(favorites),
       );
 
-      updateCountFavoriteItemsFromLocalStorage();
+      handleValue(LOCAL_STORAGE_FAVORITES_KEY);
     }
   };
 
@@ -79,7 +76,7 @@ export default function ProductScreen({ navigation, route }) {
         JSON.stringify(shoppingItems),
       );
 
-      updateCountShoppingItemsFromLocalStorage();
+      handleValue(LOCAL_STORAGE_SHOPPING_KEY);
     }
   };
 

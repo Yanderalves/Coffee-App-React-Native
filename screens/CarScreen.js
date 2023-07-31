@@ -11,7 +11,7 @@ const LOCAL_STORAGE_SHOPPING_KEY = "@shopping";
 
 export default function CarScreen({ navigation }) {
   const [data, setData] = useState([]);
-  const { updateCountShoppingItemsFromLocalStorage } = useContext(context);
+  const { handleValue } = useContext(context);
 
   useEffect(() => {
     fillData();
@@ -37,7 +37,7 @@ export default function CarScreen({ navigation }) {
     );
 
     fillData();
-    updateCountShoppingItemsFromLocalStorage();
+    handleValue(LOCAL_STORAGE_SHOPPING_KEY);
   };
 
   return (
