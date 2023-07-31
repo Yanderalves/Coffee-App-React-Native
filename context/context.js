@@ -1,16 +1,16 @@
-import { useEffect, createContext } from "react";
+import { createContext, useState } from "react";
 
 export const context = createContext({});
 
 export function ContextProvider({ children }) {
-  let items = 0;
+  const [items, setItems] = useState(0);
 
   const incrementItems = () => {
-    items++;
+    setItems(items + 1);
   };
 
   const decrementItems = () => {
-    items--;
+    setItems(items - 1);
   };
 
   return (

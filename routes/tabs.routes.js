@@ -32,7 +32,6 @@ export default function TabRoutes() {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="home" size={size} color={color} />
           ),
-          tabBarBadge: items,
         }}
       />
       <Tab.Screen
@@ -42,6 +41,7 @@ export default function TabRoutes() {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="heart" size={size} color={color} />
           ),
+          tabBarBadge: items || null,
           tabBarActiveTintColor: "red",
         }}
       />
