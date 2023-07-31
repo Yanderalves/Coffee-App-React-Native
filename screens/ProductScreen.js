@@ -43,7 +43,7 @@ export default function ProductScreen({ navigation, route }) {
     return JSON.parse(localStorageData);
   };
 
-  const AddFavorite = async (data) => {
+  const addFavorite = async () => {
     const favorites = await getItemsFromLocalStorage(
       LOCAL_STORAGE_FAVORITES_KEY,
     );
@@ -52,6 +52,8 @@ export default function ProductScreen({ navigation, route }) {
 
     if (!isExists) {
       favorites.push(data);
+
+      console.log(favorites);
 
       await AsyncStorage.setItem(
         LOCAL_STORAGE_FAVORITES_KEY,
@@ -62,7 +64,7 @@ export default function ProductScreen({ navigation, route }) {
     }
   };
 
-  const AddShoppingItem = async (data) => {
+  const AddShoppingItem = async () => {
     const shoppingItems = await getItemsFromLocalStorage(
       LOCAL_STORAGE_SHOPPING_KEY,
     );
@@ -108,7 +110,7 @@ export default function ProductScreen({ navigation, route }) {
             <AntDesign name="arrowleft" color="#4D515A" size={25} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={AddFavorite}
+            onPress={addFavorite}
             className=" w-12 h-12 bg-[#141821] rounded-2xl justify-center items-center"
           >
             <AntDesign
