@@ -41,11 +41,8 @@ export default function ProductScreen({ navigation, route }) {
       favorites.push(data);
 
       await AsyncStorage.setItem("@favorites", JSON.stringify(favorites));
-
-      setFavorite(!favorite);
     }
-
-    navigation.navigate("favorites");
+    setFavorite(!favorite);
   };
 
   return (
