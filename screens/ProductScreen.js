@@ -5,7 +5,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Fontisto,
   AntDesign,
@@ -16,10 +16,12 @@ import {
 import { BlurView } from "expo-blur";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { context } from "../context/context";
 
 export default function ProductScreen({ navigation, route }) {
   const [sizeSelected, setSizeSelected] = useState(null);
   const [favorite, setFavorite] = useState(false);
+  const { incrementItems, items } = useContext(context);
 
   const sizes = ["S", "M", "L"];
 
@@ -42,6 +44,8 @@ export default function ProductScreen({ navigation, route }) {
 
       await AsyncStorage.setItem("@favorites", JSON.stringify(favorites));
     }
+    console.log(items);
+    incrementItems();
     setFavorite(!favorite);
   };
 

@@ -2,11 +2,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import StackRoutes from "./stack.routes";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import { FontAwesome } from "@expo/vector-icons";
-import { View, Text } from "react-native";
+import { useContext } from "react";
+import { context } from "../context/context";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabRoutes() {
+  const { items } = useContext(context);
   return (
     <Tab.Navigator
       detachInactiveScreens={false}
@@ -30,6 +32,7 @@ export default function TabRoutes() {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="home" size={size} color={color} />
           ),
+          tabBarBadge: items,
         }}
       />
       <Tab.Screen
