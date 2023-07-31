@@ -7,6 +7,8 @@ import CoffeeCard from "../components/CoffeeCard";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { context } from "../context/context";
 
+const LOCAL_STORAGE_FAVORITES_KEY = "@favorites";
+
 export default function FavoritesScreen({ navigation }) {
   const [data, setData] = useState([]);
   const { updateCountFavoriteItemsFromLocalStorage } = useContext(context);
@@ -20,7 +22,8 @@ export default function FavoritesScreen({ navigation }) {
   };
 
   const fillData = async () => {
-    const localStorageData = (await AsyncStorage.getItem("@favorites")) || "[]";
+    const localStorageData =
+      (await AsyncStorage.getItem(LOCAL_STORAGE_FAVORITES_KEY)) || "[]";
 
     setData(JSON.parse(localStorageData));
   };
@@ -28,7 +31,10 @@ export default function FavoritesScreen({ navigation }) {
   const removeFavorite = async (id) => {
     const newArray = data.filter((item) => item.id !== id);
 
-    await AsyncStorage.setItem("@favorites", JSON.stringify(newArray));
+    await AsyncStorage.setItem(
+      LOCAL_STORAGE_FAVORITES_KEY,
+      JSON.stringify(newArray),
+    );
 
     fillData();
     updateCountFavoriteItemsFromLocalStorage();

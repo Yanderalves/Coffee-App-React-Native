@@ -7,6 +7,8 @@ import CoffeeCard from "../components/CoffeeCard";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { context } from "../context/context";
 
+const LOCAL_STORAGE_SHOPPING_KEY = "@shopping";
+
 export default function CarScreen({ navigation }) {
   const [data, setData] = useState([]);
   const { updateCountShoppingItemsFromLocalStorage } = useContext(context);
@@ -20,7 +22,8 @@ export default function CarScreen({ navigation }) {
   };
 
   const fillData = async () => {
-    const localStorageData = (await AsyncStorage.getItem("@shopping")) || "[]";
+    const localStorageData =
+      (await AsyncStorage.getItem(LOCAL_STORAGE_SHOPPING_KEY)) || "[]";
 
     setData(JSON.parse(localStorageData));
   };
@@ -28,7 +31,10 @@ export default function CarScreen({ navigation }) {
   const removeItemShopping = async (id) => {
     const newArray = data.filter((item) => item.id !== id);
 
-    await AsyncStorage.setItem("@shopping", JSON.stringify(newArray));
+    await AsyncStorage.setItem(
+      LOCAL_STORAGE_SHOPPING_KEY,
+      JSON.stringify(newArray),
+    );
 
     fillData();
     updateCountShoppingItemsFromLocalStorage();
