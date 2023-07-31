@@ -1,17 +1,19 @@
 import { FlatList, View, Text, TouchableOpacity } from "react-native";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import InputText from "../components/InputText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CoffeeCard from "../components/CoffeeCard";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { context } from "../context/context";
 
 export default function FavoritesScreen({ navigation }) {
   const [data, setData] = useState([]);
+  const { updateCountItemsFromLocalStorage } = useContext(context);
 
   useEffect(() => {
     fillData();
-  }, []);
+  });
 
   const goBack = () => {
     navigation.goBack();
@@ -29,6 +31,7 @@ export default function FavoritesScreen({ navigation }) {
     await AsyncStorage.setItem("@favorites", JSON.stringify(newArray));
 
     fillData();
+    updateCountItemsFromLocalStorage();
   };
 
   return (

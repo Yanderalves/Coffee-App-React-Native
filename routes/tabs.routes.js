@@ -8,7 +8,7 @@ import { context } from "../context/context";
 const Tab = createBottomTabNavigator();
 
 export default function TabRoutes() {
-  const { items } = useContext(context);
+  const { countItems } = useContext(context);
   return (
     <Tab.Navigator
       detachInactiveScreens={false}
@@ -22,6 +22,7 @@ export default function TabRoutes() {
           backgroundColor: "#0C0F14",
           borderTopColor: "transparent",
           paddingBottom: 5,
+          height: 60,
         },
       }}
     >
@@ -35,13 +36,13 @@ export default function TabRoutes() {
         }}
       />
       <Tab.Screen
-        name="favorites"
+        name="Favorites"
         component={FavoritesScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="heart" size={size} color={color} />
           ),
-          tabBarBadge: items || null,
+          tabBarBadge: countItems || null,
           tabBarActiveTintColor: "red",
         }}
       />

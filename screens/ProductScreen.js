@@ -4,8 +4,9 @@ import {
   StatusBar,
   ImageBackground,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Fontisto,
   AntDesign,
@@ -21,7 +22,7 @@ import { context } from "../context/context";
 export default function ProductScreen({ navigation, route }) {
   const [sizeSelected, setSizeSelected] = useState(null);
   const [favorite, setFavorite] = useState(false);
-  const { incrementItems, items } = useContext(context);
+  const { updateCountItemsFromLocalStorage } = useContext(context);
 
   const sizes = ["S", "M", "L"];
 
@@ -31,11 +32,15 @@ export default function ProductScreen({ navigation, route }) {
     navigation.goBack();
   };
 
-  const AddFavorite = async () => {
+  const getItemsFromLocalStorage = async () => {
     const localStorageFavorites =
       (await AsyncStorage.getItem("@favorites")) || "[]";
 
-    const favorites = JSON.parse(localStorageFavorites);
+    return JSON.parse(localStorageFavorites);
+  };
+
+  const AddFavorite = async () => {
+    const favorites = await getItemsFromLocalStorage();
 
     const isExists = favorites.some((item) => item.id === data.id);
 
@@ -43,11 +48,23 @@ export default function ProductScreen({ navigation, route }) {
       favorites.push(data);
 
       await AsyncStorage.setItem("@favorites", JSON.stringify(favorites));
+
+      updateCountItemsFromLocalStorage();
     }
-    console.log(items);
-    incrementItems();
-    setFavorite(!favorite);
   };
+
+  useEffect(() => {
+    const initialize = async () => {
+      const favorites = await getItemsFromLocalStorage();
+      const isExists = favorites.some((item) => item.id === data.id);
+      if (isExists) {
+        setFavorite(true);
+      } else {
+        setFavorite(false);
+      }
+    };
+    initialize();
+  });
 
   return (
     <View className="bg-[#0C0F14] flex-1 px-5 py-1 items-center">
