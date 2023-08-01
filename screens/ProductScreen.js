@@ -50,8 +50,6 @@ export default function ProductScreen({ navigation, route }) {
     if (!isExists) {
       favorites.push(data);
 
-      console.log(favorites);
-
       await AsyncStorage.setItem(
         LOCAL_STORAGE_FAVORITES_KEY,
         JSON.stringify(favorites),
@@ -89,7 +87,7 @@ export default function ProductScreen({ navigation, route }) {
       setFavorite(isExists);
     };
     initialize();
-  }, []);
+  });
 
   return (
     <View className="bg-[#0C0F14] flex-1 px-5 py-1 items-center">
